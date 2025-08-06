@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.urls import path
 from .views import VideoListAPIView, video_list, video_dashboard
 

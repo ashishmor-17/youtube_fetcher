@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from celery import shared_task
 from .services import fetch_youtube_videos
 from .models import Video

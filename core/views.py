@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from rest_framework import generics
 from .models import Video
 from .serializers import VideoSerializer

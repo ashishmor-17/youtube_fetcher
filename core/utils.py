@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # core/utils.py
 
 import logging
