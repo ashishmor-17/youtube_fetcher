@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    command: gunicorn youtube_fetcher.wsgi:application --bind 0.0.0.0:8000 --workers=4
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+
+  celery:
+    build: .
+    command: celery -A youtube_fetcher worker -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  beat:
+    build: .
+    command: celery -A youtube_fetcher beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: youtube_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

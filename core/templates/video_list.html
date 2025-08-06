@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>YouTube Videos</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      img {
+        border-radius: 8px;
+      }
+      hr {
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Latest YouTube Videos</h1>
+    <ul>
+      {% for video in videos %}
+      <li>
+        <h3>{{ video.title }}</h3>
+        <img src="{{ video.thumbnail_url }}" alt="thumbnail" width="320" />
+        <p>{{ video.description }}</p>
+        <small>Published at: {{ video.published_at }}</small>
+        <hr />
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

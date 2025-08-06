@@ -1,0 +1,37 @@
+<!-- core/templates/dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Dashboard</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        form { margin-bottom: 20px; }
+        .video { margin-bottom: 30px; border-bottom: 1px solid #ccc; padding-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Video Dashboard</h1>
+
+    <form method="get">
+        <input type="text" name="q" placeholder="Search title/description..." value="{{ query }}">
+        <input type="date" name="start_date" value="{{ start_date }}">
+        <input type="date" name="end_date" value="{{ end_date }}">
+        <select name="sort">
+            <option value="-published_at" {% if sort == "-published_at" %}selected{% endif %}>Newest First</option>
+            <option value="published_at" {% if sort == "published_at" %}selected{% endif %}>Oldest First</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    {% for video in videos %}
+        <div class="video">
+            <h3>{{ video.title }}</h3>
+            <img src="{{ video.thumbnail_url }}" width="300" alt="thumbnail"><br>
+            <small><strong>Published at:</strong> {{ video.published_at }}</small>
+            <p>{{ video.description }}</p>
+        </div>
+    {% empty %}
+        <p>No videos found.</p>
+    {% endfor %}
+</body>
+</html>
